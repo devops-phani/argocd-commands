@@ -64,6 +64,12 @@ while IFS= read -r line; do
 done < "$FILE"
 ```
 
+
+Get the autosync enabled applications
+
+```
+kubectl get applications -n argocd -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.project}{"\t"}{.spec.syncPolicy.automated}{"\n"}{end}' | grep {} | awk '{print $1}'
+```
 ```
 sh test.sh
 ```
