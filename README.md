@@ -74,4 +74,25 @@ kubectl get applications -n argocd -o jsonpath='{range .items[*]}{.metadata.name
 sh test.sh
 ```
 
+Argocd policies from helm chart or `argocd-rbac-cm` configmap
+
+Refeerence link
+
+- https://github.com/argoproj/argo-cd/blob/master/assets/builtin-policy.csv
+
+
+- Provide read access to argocd-reader group
+- Provide admin access to argocd-admin group
+- Provide only sync access of test project to argocd-test-sync group
+
+```
+rbac:
+  policy.csv: |
+     g, "argocd-admin", role:admin
+     g, "argocd-reader", role:readonly
+     p, role:testsync, applications, sync, test/*, allow
+     g, "argocd-test-sync", role:demosync
+```      
+
+
 
